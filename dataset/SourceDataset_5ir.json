@@ -1,0 +1,154 @@
+{
+	"name": "SourceDataset_5ir",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Custom brokerage (4).csv",
+				"folderPath": "firstdir",
+				"fileSystem": "dlcointainers1g1"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Importer Of Record",
+				"type": "String"
+			},
+			{
+				"name": "Declaration Number",
+				"type": "String"
+			},
+			{
+				"name": "Broker Reference Number",
+				"type": "String"
+			},
+			{
+				"name": "Carrier Code",
+				"type": "String"
+			},
+			{
+				"name": "Voyage/Flight",
+				"type": "String"
+			},
+			{
+				"name": "Vessel",
+				"type": "String"
+			},
+			{
+				"name": "Port of Loading",
+				"type": "String"
+			},
+			{
+				"name": "Port of Unlading",
+				"type": "String"
+			},
+			{
+				"name": "Port of Entry",
+				"type": "String"
+			},
+			{
+				"name": "Expeditors Branch",
+				"type": "String"
+			},
+			{
+				"name": "Export Date (IST)",
+				"type": "String"
+			},
+			{
+				"name": "Import Date (IST)",
+				"type": "String"
+			},
+			{
+				"name": "Entry Date (IST)",
+				"type": "String"
+			},
+			{
+				"name": "Release Date (IST)",
+				"type": "String"
+			},
+			{
+				"name": "Declaration Type",
+				"type": "String"
+			},
+			{
+				"name": "Mode of Transport",
+				"type": "String"
+			},
+			{
+				"name": "Country of Origin",
+				"type": "String"
+			},
+			{
+				"name": "Country of Export",
+				"type": "String"
+			},
+			{
+				"name": "Commercial Invoice Number",
+				"type": "String"
+			},
+			{
+				"name": "Item Number",
+				"type": "String"
+			},
+			{
+				"name": "Tariff No. 1",
+				"type": "String"
+			},
+			{
+				"name": "Tariff Description 1",
+				"type": "String"
+			},
+			{
+				"name": "Tariff Currency 1",
+				"type": "String"
+			},
+			{
+				"name": "Tariff Census Quantity 1",
+				"type": "String"
+			},
+			{
+				"name": "Tariff Census Units 1",
+				"type": "String"
+			},
+			{
+				"name": "Manufacturer ID",
+				"type": "String"
+			},
+			{
+				"name": "Declared Value",
+				"type": "String"
+			},
+			{
+				"name": "Duty Amount",
+				"type": "String"
+			},
+			{
+				"name": "Tax Amount",
+				"type": "String"
+			},
+			{
+				"name": "MPF Computed",
+				"type": "String"
+			},
+			{
+				"name": "MPF Effective",
+				"type": "String"
+			},
+			{
+				"name": "HMF Amount",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
