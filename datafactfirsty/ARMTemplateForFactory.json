@@ -1,0 +1,1263 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "datafactfirsty"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storage1forfirstgroup.dfs.core.windows.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_5ir')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_5ir",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dlcointainers1g1/firstdir/Custom brokerage (4).csv"
+							},
+							{
+								"name": "Destination",
+								"value": "dlcointainers1g1/firstdir/ones.csv"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_5ir",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_5ir",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-07-01T15:17:48Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_5ir')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_5ir')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyPipeline_itf')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "source description",
+				"activities": [
+					{
+						"name": "From_data_fact-1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "dlcointainers1g1/firstdir/Custom brokerage (4).csv"
+							},
+							{
+								"name": "Destination",
+								"value": "dlcointainers1g1/firstdir/Custom brokerage (4).csv"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Warning",
+									"enableReliableLogging": false
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "AzureDataLakeStorage1",
+										"type": "LinkedServiceReference"
+									},
+									"path": "dlcointainers1g1/firstdir"
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Importer Of Record",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Importer Of Record",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Declaration Number",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Declaration Number",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Broker Reference Number",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Broker Reference Number",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Carrier Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Carrier Code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Voyage/Flight",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Voyage/Flight",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Vessel",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Vessel",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Port of Loading",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Port of Loading",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Port of Unlading",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Port of Unlading",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Port of Entry",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Port of Entry",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Expeditors Branch",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Expeditors Branch",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Export Date (IST)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Export Date (IST)",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Import Date (IST)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Import Date (IST)",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Entry Date (IST)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Entry Date (IST)",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Release Date (IST)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Release Date (IST)",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Declaration Type",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Declaration Type",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Mode of Transport",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Mode of Transport",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Country of Origin",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Country of Origin",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Country of Export",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Country of Export",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Commercial Invoice Number",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Commercial Invoice Number",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Item Number",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Item Number",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Tariff No. 1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Tariff No. 1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Tariff Description 1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Tariff Description 1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Tariff Currency 1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Tariff Currency 1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Tariff Census Quantity 1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Tariff Census Quantity 1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Tariff Census Units 1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Tariff Census Units 1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Manufacturer ID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Manufacturer ID",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Declared Value",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Declared Value",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Duty Amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Duty Amount",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Tax Amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Tax Amount",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MPF Computed",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "MPF Computed",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MPF Effective",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "MPF Effective",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "HMF Amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "HMF Amount",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_itf",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_itf",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-07-01T15:20:02Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_itf')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_itf')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/fir2sec')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "fir2sec",
+				"activities": [
+					{
+						"name": "ftos",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"modifiedDatetimeStart": "2025-07-03T11:30:42Z",
+									"modifiedDatetimeEnd": "2025-07-03T11:30:42Z",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-07-03T11:55:34Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Custom brokerage (4).csv",
+						"folderPath": "firstdir",
+						"fileSystem": "dlcointainers1g1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Importer Of Record",
+						"type": "String"
+					},
+					{
+						"name": "Declaration Number",
+						"type": "String"
+					},
+					{
+						"name": "Broker Reference Number",
+						"type": "String"
+					},
+					{
+						"name": "Carrier Code",
+						"type": "String"
+					},
+					{
+						"name": "Voyage/Flight",
+						"type": "String"
+					},
+					{
+						"name": "Vessel",
+						"type": "String"
+					},
+					{
+						"name": "Port of Loading",
+						"type": "String"
+					},
+					{
+						"name": "Port of Unlading",
+						"type": "String"
+					},
+					{
+						"name": "Port of Entry",
+						"type": "String"
+					},
+					{
+						"name": "Expeditors Branch",
+						"type": "String"
+					},
+					{
+						"name": "Export Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Import Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Entry Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Release Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Declaration Type",
+						"type": "String"
+					},
+					{
+						"name": "Mode of Transport",
+						"type": "String"
+					},
+					{
+						"name": "Country of Origin",
+						"type": "String"
+					},
+					{
+						"name": "Country of Export",
+						"type": "String"
+					},
+					{
+						"name": "Commercial Invoice Number",
+						"type": "String"
+					},
+					{
+						"name": "Item Number",
+						"type": "String"
+					},
+					{
+						"name": "Tariff No. 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Description 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Currency 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Census Quantity 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Census Units 1",
+						"type": "String"
+					},
+					{
+						"name": "Manufacturer ID",
+						"type": "String"
+					},
+					{
+						"name": "Declared Value",
+						"type": "String"
+					},
+					{
+						"name": "Duty Amount",
+						"type": "String"
+					},
+					{
+						"name": "Tax Amount",
+						"type": "String"
+					},
+					{
+						"name": "MPF Computed",
+						"type": "String"
+					},
+					{
+						"name": "MPF Effective",
+						"type": "String"
+					},
+					{
+						"name": "HMF Amount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "sec dir",
+						"fileSystem": "dlcointainers1g1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_5ir')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "ones.csv",
+						"folderPath": "firstdir",
+						"fileSystem": "dlcointainers1g1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_itf')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Custom brokerage (4).csv",
+						"folderPath": "firstdir",
+						"fileSystem": "dlcointainers1g1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_5ir')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Custom brokerage (4).csv",
+						"folderPath": "firstdir",
+						"fileSystem": "dlcointainers1g1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Importer Of Record",
+						"type": "String"
+					},
+					{
+						"name": "Declaration Number",
+						"type": "String"
+					},
+					{
+						"name": "Broker Reference Number",
+						"type": "String"
+					},
+					{
+						"name": "Carrier Code",
+						"type": "String"
+					},
+					{
+						"name": "Voyage/Flight",
+						"type": "String"
+					},
+					{
+						"name": "Vessel",
+						"type": "String"
+					},
+					{
+						"name": "Port of Loading",
+						"type": "String"
+					},
+					{
+						"name": "Port of Unlading",
+						"type": "String"
+					},
+					{
+						"name": "Port of Entry",
+						"type": "String"
+					},
+					{
+						"name": "Expeditors Branch",
+						"type": "String"
+					},
+					{
+						"name": "Export Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Import Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Entry Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Release Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Declaration Type",
+						"type": "String"
+					},
+					{
+						"name": "Mode of Transport",
+						"type": "String"
+					},
+					{
+						"name": "Country of Origin",
+						"type": "String"
+					},
+					{
+						"name": "Country of Export",
+						"type": "String"
+					},
+					{
+						"name": "Commercial Invoice Number",
+						"type": "String"
+					},
+					{
+						"name": "Item Number",
+						"type": "String"
+					},
+					{
+						"name": "Tariff No. 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Description 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Currency 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Census Quantity 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Census Units 1",
+						"type": "String"
+					},
+					{
+						"name": "Manufacturer ID",
+						"type": "String"
+					},
+					{
+						"name": "Declared Value",
+						"type": "String"
+					},
+					{
+						"name": "Duty Amount",
+						"type": "String"
+					},
+					{
+						"name": "Tax Amount",
+						"type": "String"
+					},
+					{
+						"name": "MPF Computed",
+						"type": "String"
+					},
+					{
+						"name": "MPF Effective",
+						"type": "String"
+					},
+					{
+						"name": "HMF Amount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_itf')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Custom brokerage (4).csv",
+						"folderPath": "firstdir",
+						"fileSystem": "dlcointainers1g1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Importer Of Record",
+						"type": "String"
+					},
+					{
+						"name": "Declaration Number",
+						"type": "String"
+					},
+					{
+						"name": "Broker Reference Number",
+						"type": "String"
+					},
+					{
+						"name": "Carrier Code",
+						"type": "String"
+					},
+					{
+						"name": "Voyage/Flight",
+						"type": "String"
+					},
+					{
+						"name": "Vessel",
+						"type": "String"
+					},
+					{
+						"name": "Port of Loading",
+						"type": "String"
+					},
+					{
+						"name": "Port of Unlading",
+						"type": "String"
+					},
+					{
+						"name": "Port of Entry",
+						"type": "String"
+					},
+					{
+						"name": "Expeditors Branch",
+						"type": "String"
+					},
+					{
+						"name": "Export Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Import Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Entry Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Release Date (IST)",
+						"type": "String"
+					},
+					{
+						"name": "Declaration Type",
+						"type": "String"
+					},
+					{
+						"name": "Mode of Transport",
+						"type": "String"
+					},
+					{
+						"name": "Country of Origin",
+						"type": "String"
+					},
+					{
+						"name": "Country of Export",
+						"type": "String"
+					},
+					{
+						"name": "Commercial Invoice Number",
+						"type": "String"
+					},
+					{
+						"name": "Item Number",
+						"type": "String"
+					},
+					{
+						"name": "Tariff No. 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Description 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Currency 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Census Quantity 1",
+						"type": "String"
+					},
+					{
+						"name": "Tariff Census Units 1",
+						"type": "String"
+					},
+					{
+						"name": "Manufacturer ID",
+						"type": "String"
+					},
+					{
+						"name": "Declared Value",
+						"type": "String"
+					},
+					{
+						"name": "Duty Amount",
+						"type": "String"
+					},
+					{
+						"name": "Tax Amount",
+						"type": "String"
+					},
+					{
+						"name": "MPF Computed",
+						"type": "String"
+					},
+					{
+						"name": "MPF Effective",
+						"type": "String"
+					},
+					{
+						"name": "HMF Amount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "from datafact ingest",
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
